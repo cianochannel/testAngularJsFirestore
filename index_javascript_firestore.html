@@ -1,7 +1,12 @@
-<html>
+<html ng-app="myApp">
   <head>
     <title>My App (test Angularjs + Firebase)</title>
 
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+    <!-- AngularFire -->
+    <!-- <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>-->
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
@@ -14,20 +19,30 @@
     <!-- Initialize Firebase -->
     <script>
 
-      var config = {
+      /*var config = {
         apiKey: "AIzaSyCAjIvPSOjz9Rmxui_eXn9QgX3nqs6-NYw",
         authDomain: "testangularjsfirestore.firebaseapp.com",
         databaseURL: "https://testangularjsfirestore.firebaseio.com",
         projectId: "testangularjsfirestore",
         storageBucket: "",
         messagingSenderId: "925116971401"
+      };*/
+      var config = {
+        apiKey: "AIzaSyBSu-3ahJg_66LcLTz-F1Aow_4UVpvGnh8",
+        authDomain: "gina-parigina.firebaseapp.com",
+        databaseURL: "https://gina-parigina.firebaseio.com",
+        projectId: "gina-parigina",
+        storageBucket: "gina-parigina.appspot.com",
+        messagingSenderId: "710211075327"
       };
       firebase.initializeApp(config);
 
       var firestore = firebase.firestore();
 
-      /* for(var i=1; i<=10000; i++){
-        const docRef = firestore.doc("readings/"+rndNumber(40));
+      // Write
+
+      /*for(var i=1; i<=10; i++){
+        const docRef = firestore.doc("readings/"+i);
         docRef.set({
           cycleId:rndString(40),
           fileId:rndString(40),
@@ -47,56 +62,71 @@
           minimumRead:rndNumber(9),
           maximumRead:rndNumber(9)
         }).then(function(result) {
-          console.log("Saved", result);
+          console.log("Saved");
         }).catch(function (error) {
           console.log("Error:", error);
         });
       }*/
 
-      //const docRef = firestore.collection("readings").doc("0001916930719195880333547449333142284937");
-      firestore.collection("readings").get().then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          console.log(doc.id, " => ", doc.data());
-        });
-      });
 
 
-      function rndString(length) {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        for (var i = 0; i < length; i++)
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
-        return text;
-      }
+      var myApp = angular.module("myApp", []);
+      myApp.controller("myCtrl", ["$scope", "$window", function($scope, $window) {
 
-      function rndNumber(length) {
-        var text = "";
-        var possible = "0123456789";
-        for (var i = 0; i < length; i++)
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
-        return text;
-      }
+        $scope.readings=[];
+        $scope.readings.push("via verdi");
+        $scope.readings.push("via rossi");
+        $window.firestore.collection("readings").get()
+          .then(function(result) {
+            result.forEach(function(doc) {
+              $scope.readings.push(doc.data().address);
+            });
+          $scope.$apply();
+          });
 
-      function CL(s){ console.log(s); }
+
+      }]);
 
 
     </script>
-
-    <script>
-
-
-    </script>
-
 
 
   </head>
 
-  <body>
-
-
-
+  <body ng-controller="myCtrl">
+    <div ng-repeat="item in readings">
+      ADD: {{ item }}
+    </div>
 
   </body>
+
+  <script>
+
+    function rndString(length) {
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      for (var i = 0; i < length; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      return text;
+    }
+
+    function rndNumber(length) {
+      var text = "";
+      var possible = "0123456789";
+      for (var i = 0; i < length; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      return text;
+    }
+
+    // Read
+    //const docRef = firestore.collection("readings").doc("0001916930719195880333547449333142284937");
+
+
+
+
+
+    function CL(s){ console.log(s); }
+  </script>
 
 </html>
 
