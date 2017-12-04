@@ -1,18 +1,10 @@
-<html ng-app="myApp">
+<html>
   <head>
     <title>My App (test Angularjs + Firebase)</title>
 
-    <!-- AngularJS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
-
-    <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
-
-
-    <!-- Include extra components -->
     <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase-app.js"></script> 
     <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase-firestore.js"></script> 
     <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase-auth.js"></script> 
@@ -21,6 +13,7 @@
 
     <!-- Initialize Firebase -->
     <script>
+
       var config = {
         apiKey: "AIzaSyCAjIvPSOjz9Rmxui_eXn9QgX3nqs6-NYw",
         authDomain: "testangularjsfirestore.firebaseapp.com",
@@ -30,18 +23,66 @@
         messagingSenderId: "925116971401"
       };
       firebase.initializeApp(config);
+
+      var firestore = firebase.firestore();
+
+      /* for(var i=1; i<=10000; i++){
+        const docRef = firestore.doc("readings/"+rndNumber(40));
+        docRef.set({
+          cycleId:rndString(40),
+          fileId:rndString(40),
+          chargeId:rndString(40),
+          customer:rndString(40),
+          address:rndString(40),
+          streetNumber:rndNumber(4),
+          postalCode:rndNumber(5),
+          city:rndString(40),
+          province:rndString(2),
+          customerCode:rndNumber(14),
+          pod:rndNumber(24),
+          counterCode:rndString(24),
+          counterDigits:rndNumber(1),
+          previousRead:rndNumber(9),
+          previousReadData:'01/01/2017',
+          minimumRead:rndNumber(9),
+          maximumRead:rndNumber(9)
+        }).then(function(result) {
+          console.log("Saved", result);
+        }).catch(function (error) {
+          console.log("Error:", error);
+        });
+      }*/
+
+      //const docRef = firestore.collection("readings").doc("0001916930719195880333547449333142284937");
+      firestore.collection("readings").get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          console.log(doc.id, " => ", doc.data());
+        });
+      });
+
+
+      function rndString(length) {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < length; i++)
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+      }
+
+      function rndNumber(length) {
+        var text = "";
+        var possible = "0123456789";
+        for (var i = 0; i < length; i++)
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+      }
+
+      function CL(s){ console.log(s); }
+
+
     </script>
 
     <script>
-
-      // --------------------------------------------------- Inizializzo Angular
-      var myApp = angular.module("myApp", ["firebase"]);
-      myApp.controller("MainController", ["$scope", "$window", function($scope, $window) {
-
-        // TODO
-        // I would like to bind AngularJS with Firestore DB https://gina-parigina.firebaseio.com
-
-      }]);
 
 
     </script>
@@ -50,9 +91,9 @@
 
   </head>
 
-  <body ng-controller="MainController">
+  <body>
 
-    Prova
+
 
 
   </body>
