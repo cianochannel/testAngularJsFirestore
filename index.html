@@ -1,0 +1,61 @@
+<html ng-app="myApp">
+  <head>
+    <title>My App (test Angularjs + Firebase)</title>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+
+
+    <!-- Include extra components -->
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase-app.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase-firestore.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase-auth.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase-database.js"></script> 
+    <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase-messaging.js"></script> 
+
+    <!-- Initialize Firebase -->
+    <script>
+      var config = {
+        apiKey: "AIzaSyBSu-3ahJg_66LcLTz-F1Aow_4UVpvGnh8",
+        authDomain: "gina-parigina.firebaseapp.com",
+        databaseURL: "https://gina-parigina.firebaseio.com",
+        projectId: "gina-parigina",
+        storageBucket: "gina-parigina.appspot.com",
+        messagingSenderId: "710211075327"
+      };
+      firebase.initializeApp(config);
+    </script>
+    
+     <script>
+
+      // --------------------------------------------------- Inizializzo Angular
+      var myApp = angular.module("myApp", ["firebase"]);
+      myApp.controller("MainController", ["$scope", "$window", function($scope, $window) {
+        
+        // TODO
+        // I would like to bind AngularJS with Firestore DB https://gina-parigina.firebaseio.com
+        
+      }]);
+
+
+    </script>
+
+
+
+  </head>
+
+  <body ng-controller="MainController">
+
+    
+
+   
+  </body>
+
+</html>
+
